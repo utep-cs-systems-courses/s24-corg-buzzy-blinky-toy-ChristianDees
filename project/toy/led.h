@@ -13,7 +13,9 @@ void greenOn();
 void redOn();
 void lightsOn();
 void lightsOff();
-
+void dtb_btd();
+void blink_four_times();
+void ledGameOver();
 
 
 // these are boolean flags
