@@ -17,6 +17,7 @@ void state_pregame() {
 void state_duringgame() {
     // add buzz once sounds
     // add game function
+    ledGame();
 }
 
 void state_gameover(){

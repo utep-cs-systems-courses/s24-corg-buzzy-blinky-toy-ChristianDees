@@ -12,7 +12,7 @@ all: combined.elf
 
 #additional rules for files
 
-combined.elf: ${COMMON_OBJECTS} p2_interrupt_handler.o stateMachines.o vector_interrupt_handlers.o p1_interrupt_handler.o led.o switches.o ../lib/libTimer.a
+combined.elf: ${COMMON_OBJECTS} stateMachines.o vector_interrupt_handlers.o p1_interrupt_handler.o led.o switches.o ../lib/libTimer.a
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^
 
 load: combined.elf

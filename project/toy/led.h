@@ -15,6 +15,7 @@ void lightsOn();
 void lightsOff();
 void dtb_btd();
 void blink_four_times();
+void ledGame();
 void ledGameOver();
 
 

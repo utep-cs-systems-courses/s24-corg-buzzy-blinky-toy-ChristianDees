@@ -2,106 +2,104 @@
 #include "led.h"
 #include "stateMachines.h"
 
-int random_led = 0;
-int green_blinkLimit = 5;  //
-int red_blinkLimit = 1;  // initially keep red on
-int green_blinkCount = 0;  // cycles 0...blinkLimit-1
+// dtb_btd() vars
+int green_blinkLimit = 5; // initially keep green dim
+int red_blinkLimit = 1;  // initially keep red bright
+int green_blinkCount = 0;
 int red_blinkCount = 0;
 int secondCount = 0;
 
+// blink_four_times() vars
 int countSeconds = 0;
 int thirdCount = 0;
 
 
-int second = 0;
-
-
-// gameover vars
-
-int gameOverSeconds = 0;
-int gameOverCount = 0;
-
-
+// initialize leds
 void led_init()
 {
-    P1DIR |= LEDS;        // bits attached to leds are output
+    P1DIR |= LEDS;
     P1OUT &= ~LEDS;
 }
 
+// turn green led on
 void greenOn(){
     P1OUT &= ~LEDS;
     P1OUT |= LED_GREEN;
 }
+
+//turn red led on
 void redOn(){
     P1OUT &= ~LEDS;
     P1OUT |= LED_RED;
 }
+
+// turn both leds on
 void lightsOn(){
     P1OUT &= ~LEDS;
     P1OUT |= LEDS;
 }
+
+// turn both leds off
 void lightsOff(){
     P1OUT &= ~LEDS;
 }
 
+// green starts dim, gradually getting brighter
+// red starts bright, gradually getting dimmer
 void dtb_btd(){
     green_blinkCount++;
     if (green_blinkCount >= green_blinkLimit) { // on for 1 interrupt period
       green_blinkCount = 0;
       P1OUT |= LED_GREEN; // set green
-    } else if (green_blinkCount < green_blinkLimit)                          // off for blinkLimit - 1 interrupt periods
+    } else if (green_blinkCount < green_blinkLimit)
       P1OUT &= ~LED_GREEN; // clear green
     if (red_blinkCount >= red_blinkLimit){
       red_blinkCount = 0;
       P1OUT |=  LED_RED; // set red
     } else if (red_blinkCount < red_blinkLimit)
-      P1OUT &= ~LED_RED; // clear red
-    // measure a second
+    P1OUT &= ~LED_RED; // clear red
     red_blinkCount++;
     secondCount ++;
     if (secondCount >= 250) {  // once each second
       secondCount = 0;
-      red_blinkLimit ++;
-      green_blinkLimit --;           // reduce duty cycle
-      if (green_blinkLimit <= 0)     // but don't let duty cycle go below 1/7.
-        green_blinkLimit = 5;
+      red_blinkLimit ++;// make red blink more (get dimmer)
+      green_blinkLimit --; // make green blink less (get less dim)
+      if (green_blinkLimit <= 0)
+         green_blinkLimit = 5; // reset green to 5 blinks
       if (red_blinkLimit > 5)
-        red_blinkLimit = 1;
+         red_blinkLimit = 1; // reset red to 1 blink
     }
 }
 
+// blink countdown (red, red, red, green)
 void blink_four_times(){
     if (thirdCount == 8){
         countSeconds = 0;
         thirdCount = 0;
         P1OUT &= ~LEDS;
-        transition(DURINGGAME);
+        transition(DURINGGAME); // once done blinking, start game
     }
     countSeconds ++;
-    if (countSeconds >= 125) {     /* once each sec... */
+    if (countSeconds >= 125) {     // once each second
       countSeconds = 0; // reset count
       thirdCount++;
         if (thirdCount > 6){
             P1OUT &= ~LED_RED;
-            P1OUT |= LED_GREEN;
+            P1OUT |= LED_GREEN; // turn green on last blink
         } else {
-            P1OUT ^= LED_RED;
+            P1OUT ^= LED_RED; // blink red 3 times
         }
     }
 }
 
-void ledGameOver(){
-    if (gameOverCount == 4){
-        gameOverSeconds = 0;
-        gameOverCount = 0;
-        P1OUT &= ~LEDS;
-        transition(WAITING);
-    }
-    gameOverSeconds ++;
-    if (gameOverSeconds >= 125) {     /* once each sec... */
-        gameOverSeconds = 0; // reset count
-        gameOverCount++;
-      P1OUT ^= LED_RED;
-        
-    }
+// random leds every 2 seconds
+void ledGame(){
+    
 }
+
+// blink red lights twice once game over
+void ledGameOver(){
+
+}
+
+
