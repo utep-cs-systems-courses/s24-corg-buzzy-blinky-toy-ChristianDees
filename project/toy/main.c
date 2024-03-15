@@ -2,6 +2,7 @@
 #include "led.h"
 #include "switches.h"
 #include "buzzer.h"
+#include "randomInt.h"
 
 void main(void)
 {
@@ -10,5 +11,6 @@ void main(void)
   switch_init();
   led_init();
   buzzer_init();
+  adc_init();
   or_sr(0x18);  // CPU off, GIE on
 }

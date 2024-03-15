@@ -2,6 +2,7 @@
 #include "led.h"
 #include "stateMachines.h"
 #include "buzzer.h"
+#include "randomInt.h"
 
 // dtb_btd() vars
 int green_blinkLimit = 5; // initially keep green dim
@@ -101,7 +102,7 @@ void ledGame(){
     second++;
     if (second >= 500) { // once every 2 seconds
         second = 0;
-        // random_led = random integer method (different every boot)
+        random_led = random_int_generator();
         switch (random_led) {
             case 1:
                 greenOn(); // Turn on green LED
