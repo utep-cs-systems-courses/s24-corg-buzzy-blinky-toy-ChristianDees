@@ -2,6 +2,7 @@
 #include "stateMachines.h"
 #include "led.h"
 #include "libTimer.h"
+#include "buzzer.h"
 
 State current_state = WAITING;
 
@@ -10,13 +11,12 @@ void state_waiting() {
 }
 
 void state_pregame() {
-    // add buzz three time sounds
+    buzz_four_times();
     blink_four_times();
 }
 
 void state_duringgame() {
-    // add buzz once sounds
-    // add game function
+    buzz_once();
     ledGame();
 }
 

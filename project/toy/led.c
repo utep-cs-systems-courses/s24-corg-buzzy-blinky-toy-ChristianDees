@@ -1,6 +1,7 @@
 #include <msp430.h>
 #include "led.h"
 #include "stateMachines.h"
+#include "buzzer.h"
 
 // dtb_btd() vars
 int green_blinkLimit = 5; // initially keep green dim
@@ -13,6 +14,9 @@ int secondCount = 0;
 int countSeconds = 0;
 int thirdCount = 0;
 
+// led_game() vars
+int second = 0;
+int random_led = 0;
 
 // initialize leds
 void led_init()
@@ -94,6 +98,25 @@ void blink_four_times(){
 
 // random leds every 2 seconds
 void ledGame(){
+    second++;
+    if (second >= 500) { // once every 2 seconds
+        second = 0;
+        // random_led = random integer method (different every boot)
+        switch (random_led) {
+            case 1:
+                greenOn(); // Turn on green LED
+                break;
+            case 2:
+                redOn(); // Turn on red LED
+                break;
+            case 3:
+                lightsOn(); // Turn on both LEDs
+                break;
+            case 4:
+                lightsOff(); // Turn off both LEDs
+                break;
+        }
+    }
     
 }
 
