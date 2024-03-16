@@ -18,6 +18,7 @@ void blink_four_times();
 void ledGame();
 void ledGameOver();
 
+extern int random_led;
 
 // these are boolean flags
 #endif
