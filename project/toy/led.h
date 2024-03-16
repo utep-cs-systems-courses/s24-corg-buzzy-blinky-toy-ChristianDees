@@ -7,8 +7,7 @@
 #define LED_RED BIT6             // P1.6
 #define LEDS (BIT0 | BIT6)
 
-void led_init();                /* initialize LEDs */
-
+void led_init();
 void greenOn();
 void redOn();
 void lightsOn();
@@ -17,8 +16,11 @@ void dtb_btd();
 void blink_four_times();
 void ledGame();
 void ledGameOver();
+void updateGameOver();
+void updatePreGame();
 
 extern int random_led;
+extern int gameOverSecondsl;
+extern int gameOverCount;
 
-// these are boolean flags
 #endif

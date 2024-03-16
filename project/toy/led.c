@@ -3,6 +3,8 @@
 #include "stateMachines.h"
 #include "buzzer.h"
 #include "randomInt.h"
+#include "libTimer.h"
+
 
 // dtb_btd() vars
 int green_blinkLimit = 5; // initially keep green dim
@@ -15,9 +17,15 @@ int secondCount = 0;
 int countSeconds = 0;
 int thirdCount = 0;
 
-// led_game() vars
-int second = 0;
+// ledGame() vars
 int random_led = 0;
+int second = 0;
+
+
+// ledGameOver() vars
+int gameOverSeconds = 0;
+int gameOverCount = 0;
+
 
 // initialize leds
 void led_init()
@@ -118,12 +126,23 @@ void ledGame(){
                 break;
         }
     }
-    
 }
 
-// blink red lights twice once game over
-void ledGameOver(){
 
+// prerequisites to switching state to gameover
+void updateGameOver(){
+    buzzer_set_period(0);
+    lightsOff();
+    transition(GAMEOVER);
 }
-
+// prerequisites to switching state to PREGAME
+void updatePreGame(){
+    lightsOff();
+    green_blinkLimit = 5;
+    red_blinkLimit = 1;
+    green_blinkCount = 0;
+    red_blinkCount = 0;
+    secondCount = 0;
+    transition(PREGAME);
+}
 

@@ -9,3 +9,4 @@ __interrupt_vec(PORT2_VECTOR) Port_2(){
     switch_interrupt_handler(); // single handler for all switches
   }
 }
+

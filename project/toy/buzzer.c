@@ -13,6 +13,12 @@ int interruptCount = 0;
 int buzzSecond3 = 0;
 int buzzOnceCounter = 0;
 
+// buzz_game_over() vars
+int second5 = 0;
+int buzzInterrupt = 0;
+int gameCounter = 0;
+int buzzToggler = 0;
+
 
 void buzzer_init()
 {
@@ -77,5 +83,22 @@ void buzz_once(void){
 
 // buzz 2 times when game ends
 void buzz_game_over(){
+    if (buzzInterrupt == 4){
+        second5 = 0;
+        buzzInterrupt = 0;
+        buzzToggler = 0;
+    }
+    second5++;
+    if (second5 >= 90) { // once every 90th of a second
+        second5 = 0;
+        buzzInterrupt++;
+        buzzToggler ^= 1; // "toggle buzzer on/off"
+        buzzer_set_period(8000);
+        if (!(buzzToggler)) // if buzzer is not on, set frequency to 0
+          buzzer_set_period(0);
+        if (buzzInterrupt==3){ // on second buzz, make lower pitch
+            buzzer_set_period(15000);
 
+        }
+    }
 }

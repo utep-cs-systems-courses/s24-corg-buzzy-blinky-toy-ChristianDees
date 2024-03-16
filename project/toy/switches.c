@@ -2,7 +2,7 @@
 #include "switches.h"
 #include "led.h"
 #include "stateMachines.h"
-#include "buzzer.h"
+
 
 // return change based on switch interrupt in port 1
 char
@@ -51,8 +51,7 @@ switch_interrupt_handler()
     // if side button is pressed, transition to pregame state
     if (current_state == WAITING){
         if (!(p1val & SW0)) {
-            P1OUT &= ~LEDS;
-            transition(PREGAME);
+            updatePreGame();
         }
     }
     // set button value to 1 if pressed
@@ -79,9 +78,4 @@ switch_interrupt_handler()
     }
 }
 
-// prerequisites to switching state to gameover
-void updateGameOver(){
-    buzzer_set_period(0);
-    P1OUT &= ~LEDS;
-    transition(GAMEOVER);
-}
+
