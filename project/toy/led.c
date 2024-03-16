@@ -135,7 +135,9 @@ void updateGameOver(){
     lightsOff();
     transition(GAMEOVER);
 }
+
 // prerequisites to switching state to PREGAME
+// resets WAITING vars once interrupted
 void updatePreGame(){
     lightsOff();
     green_blinkLimit = 5;
