@@ -20,6 +20,7 @@ load: combined.elf
 
 clean:
 	rm -f *.o *.elf
+	rm -f .DS_Store
 
 buzzer.c: buzzer.h
 stateMachines.c: stateMachines.h led.h buzzer.h
