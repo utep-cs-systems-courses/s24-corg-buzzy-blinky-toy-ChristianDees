@@ -20,7 +20,5 @@ void updateGameOver();
 void updatePreGame();
 
 extern int random_led;
-extern int gameOverSecondsl;
-extern int gameOverCount;
 
 #endif
