@@ -7,7 +7,7 @@
     .extern ledSecondCount   ; interrupt count var
     .extern transition       ; state transition function
 ledGameOver:
-    cmp #4, &ledSecondCount  ; interrupt count - 4
+    cmp.b #4, &ledSecondCount  ; interrupt count - 4
     jne continueGame         ; if total interrupt counts != 4, continue the game
     jmp resetState           ; jump to reset state, ending the game
 continueGame:
@@ -16,11 +16,11 @@ continueGame:
     jl wait                  ; while it has not reached 90/250 seconds, remain static
     xor #64, &P1OUT          ; toggle current red led output on/off
     mov #0, &ledSeconds      ; set seconds to 0 once it has reached 90/250
-    inc &ledSecondCount      ; increment total interrupt count by 1
+    add.b #1, &ledSecondCount      ; increment total interrupt count by 1
 wait:
     ret                      ; do nothing
 resetState:
-    mov #0, &ledSecondCount  ; reset interrupt count to 0
+    mov.b #0, &ledSecondCount  ; reset interrupt count to 0
     mov #0, &ledSeconds      ; reset ledSeconds var to 0
     mov #0, r12              ; set 0 to register 12
     call #transition         ; calls transition(0), setting state to WAITING

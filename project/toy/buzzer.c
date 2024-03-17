@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include "buzzer.h"
 
-int buzzSeconds = 0;
-int buzzSecondCount = 0;
-char buzzToggler = 0;
+// buzzer vars
+int buzzSeconds = 0;        // number of times function is called during each interrupt
+char buzzSecondCount = 0;    // count of buzzSeconds var
+char buzzToggler = 0;       // char toggler indicating when buzzer should be on/off
 
 
 void buzzer_init()
@@ -30,16 +31,15 @@ void buzzer_set_period(short cycles) /* buzzer clock = 2MHz.  (period of 1k resu
   CCR1 = cycles >> 1;        /* one half cycle */
 }
 
-
 // buzz 3 times for pregame state
 void buzz_four_times(){
     if (buzzSecondCount == 8)
-        buzzSecondCount = 0;
+        buzzSecondCount = 0;    // reset total second counter
     buzzSeconds++;
-    if (buzzSeconds >= 125) { // once every half second
+    if (buzzSeconds >= 125) {   // once every half second
         buzzSeconds = 0;
         buzzSecondCount++;
-        buzzToggler ^= 1; // "turn on/off" buzzer
+        buzzToggler ^= 1;   // "turn on/off" buzzer
         buzzer_set_period(4545);
         if (!(buzzToggler)) // if buzzer should be off, set frequency 0
           buzzer_set_period(0);
@@ -51,12 +51,12 @@ void buzz_four_times(){
 // buzz once during game led change
 void buzz_once(void){
     if(buzzSecondCount == 1){
-        buzzSecondCount = 0;
+        buzzSecondCount = 0;    // reset total second counter
     }
     buzzSeconds++;
-    if(buzzSeconds >= 125){
+    if(buzzSeconds >= 125){     // turn buzzer off after half a second
         buzzer_set_period(0);
-        if (buzzSeconds >= 500){
+        if (buzzSeconds >= 500){    // buzzer on after 1 second
             buzzSeconds = 0;
             buzzer_set_period(4545);
             buzzSecondCount++;
@@ -67,7 +67,7 @@ void buzz_once(void){
 // buzz 2 times when game ends
 void buzz_game_over(){
     if (buzzSecondCount == 4){
-        buzzSecondCount = 0;
+        buzzSecondCount = 0;    // reset total second counter
     }
     buzzSeconds++;
     if (buzzSeconds >= 90) { // once every 90th of a second

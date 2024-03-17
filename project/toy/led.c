@@ -7,14 +7,15 @@
 
 
 // dtb_btd() vars
-int green_blinkLimit = 5; // initially keep green dim
-int red_blinkLimit = 1;  // initially keep red bright
-int green_blinkCount = 0;
-int red_blinkCount = 0;
+char green_blinkLimit = 5; // initially keep green dim
+char red_blinkLimit = 1;  // initially keep red bright
+char green_blinkCount = 0;
+char red_blinkCount = 0;
 
+// led vars
 int ledSeconds = 0;
-int ledSecondCount = 0;
-int random_led = 0;
+char ledSecondCount = 0;
+char random_led = 0;
 
 
 // initialize leds
@@ -77,13 +78,13 @@ void dtb_btd(){
 // blink countdown (red, red, red, green)
 void blink_four_times(){
     if (ledSecondCount == 8){
-        ledSecondCount = 0;
-        lightsOff();
+        ledSecondCount = 0;     // reset total second counter
+        lightsOff();            // turn lights off before starting game
         transition(DURINGGAME); // once done blinking, start game
     }
     ledSeconds ++;
-    if (ledSeconds >= 125) {     // once each second
-        ledSeconds = 0; // reset count
+    if (ledSeconds >= 125) {    // once each second
+        ledSeconds = 0;
         ledSecondCount++;
         if (ledSecondCount > 6){
             P1OUT &= ~LED_RED;

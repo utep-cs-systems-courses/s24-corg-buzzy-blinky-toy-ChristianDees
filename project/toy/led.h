@@ -19,5 +19,5 @@ void ledGameOver();
 void updateGameOver();
 void updatePreGame();
 
-extern int random_led;
+extern char random_led;
 #endif
