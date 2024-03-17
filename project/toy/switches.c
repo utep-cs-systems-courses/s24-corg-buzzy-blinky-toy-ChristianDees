@@ -81,5 +81,3 @@ switch_interrupt_handler()
         }
     }
 }
-
-

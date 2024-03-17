@@ -49,19 +49,20 @@ void buzz_four_times(){
 
 // buzz once during game led change
 void buzz_once(void){
-    if(buzzSecondCount == 2){
-        buzzSecondCount = 0;     // reset total second counter
-    }
     buzzSeconds++;
-    if(buzzSeconds >= 125){      // turn buzzer off after half a second
+    if(buzzSeconds >= 125){         // turn buzzer off after half a second
         buzzer_set_period(0);
-        if (buzzSeconds >= 500){ // buzzer on after 1 second
-            buzzSeconds = 0;
-            if(!buttonFlag && buzzSecondCount >= 1) // if no input, don't buzz again
-                buzzer_set_period(0);
-            else
+        if (buzzSeconds >= 500){    // buzzer on after 1 second
+            if(buzzSecondCount){    // after the first buzz
+                if (!buttonFlag){   // if no input, turn buzzer off
+                    buzzer_set_period(0);
+                }
+                buzzSecondCount = 0;        // reset total second counter
+            } else {
+                buzzSecondCount++;
+                buzzSeconds = 0;
                 buzzer_set_period(4545);    // if there is input, buzz for next set of leds
-            buzzSecondCount++;
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ void state_duringgame();
 void state_gameover();
 void transition(State next_state);
 
-// global variable
+// external vars
 extern State current_state;
 
 #endif

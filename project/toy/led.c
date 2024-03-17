@@ -17,6 +17,7 @@ int ledSeconds = 0;
 char ledSecondCount = 0;
 char random_led = 0;
 
+// button pressed flag
 char buttonFlag = 0;
 
 // initialize leds
