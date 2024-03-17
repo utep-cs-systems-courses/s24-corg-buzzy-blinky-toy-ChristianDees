@@ -9,8 +9,8 @@ char
 switch_update_interrupt_sense_1()
 {
     char p1val = P1IN;
-    P1IES |= (p1val & SW0);    /* if switch up, sense down */
-    P1IES &= (p1val | ~SW0);    /* if switch down, sense up */
+    P1IES |= (p1val & SW0);    // if switch up, sense down
+    P1IES &= (p1val | ~SW0);   // if switch down, sense up
     return p1val;
 }
 
@@ -19,8 +19,8 @@ char
 switch_update_interrupt_sense_2()
 {
     char p2val = P2IN;
-    P2IES |= (p2val & SWITCHES);    /* if switch up, sense down */
-    P2IES &= (p2val | ~SWITCHES);    /* if switch down, sense up */
+    P2IES |= (p2val & SWITCHES);    // if switch up, sense down
+    P2IES &= (p2val | ~SWITCHES);   // if switch down, sense up
     return p2val;
 }
 
@@ -29,16 +29,16 @@ void
 switch_init()
 {
     // port 1 switch setup
-    P1REN |= SW0;        /* enables resistors for switches */
-    P1IE |= SW0;        /* enable interrupts from switches */
-    P1OUT |= SW0;        /* pull-ups for switches */
-    P1DIR &= ~SW0;        /* set switches' bits for input */
+    P1REN |= SW0;        // enables resistors for side button
+    P1IE |= SW0;         // enable interrupts from side button
+    P1OUT |= SW0;        // pull-ups for side button
+    P1DIR &= ~SW0;       // set side button's bits for input
     
     // port 2 switch setup
-    P2REN |= SWITCHES;
-    P2IE |= SWITCHES;
-    P2OUT |= SWITCHES;
-    P2DIR &= ~SWITCHES;
+    P2REN |= SWITCHES;   // enables resistors for main buttons
+    P2IE |= SWITCHES;    // enable interrupts from main buttons
+    P2OUT |= SWITCHES;   // pull-ups for main buttons
+    P2DIR &= ~SWITCHES;  // set main button's bits for input
 }
 
 // switch handler

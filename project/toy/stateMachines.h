@@ -18,4 +18,4 @@ void transition(State next_state);
 // global variable
 extern State current_state;
 
-#endif // included
+#endif

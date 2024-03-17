@@ -4,6 +4,7 @@
 #include "buzzer.h"
 #include "randomInt.h"
 
+// initializes required components
 void main(void)
 {
   configureClocks();

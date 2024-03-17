@@ -6,16 +6,16 @@ __interrupt_vec(WDT_VECTOR) WDT()   // 250 times per second
 {
     // switch state when necessary
     switch (current_state) {
-        case WAITING:   // default state
+        case WAITING:       // default state: dimming lights
             state_waiting();
             break;
-        case PREGAME:   // countdown to game state
+        case PREGAME:       // countdown to game
             state_pregame();
             break;
-        case DURINGGAME:    // game is playing state
+        case DURINGGAME:    // game is playing
             state_duringgame();
             break;
-        case GAMEOVER:  // state once game over
+        case GAMEOVER:      // game over state
             state_gameover();
             break;
     }

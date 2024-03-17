@@ -1,6 +1,6 @@
 #include <msp430.h>
 #include "libTimer.h"
-#include <stdlib.h>     // need for random
+#include <stdlib.h>     // required for srand
 
 // initialize analog to digital converter
 void adc_init() {

@@ -1,7 +1,7 @@
 #ifndef switches_included
 #define switches_included
 
-#define SW0 BIT3        // side switch p1.3
+#define SW0 BIT3        // side button, p1.3
 #define SW1 BIT0        // button 1, p2.0
 #define SW2 BIT1        // button 2, p2.1
 #define SW3 BIT2        // button 3, p2.2
@@ -15,4 +15,4 @@ void switch_init();
 void switch_interrupt_handler();
 void updateGameOver();
 
-#endif // included
+#endif
