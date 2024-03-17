@@ -17,6 +17,7 @@ int ledSeconds = 0;
 char ledSecondCount = 0;
 char random_led = 0;
 
+char buttonFlag = 0;
 
 // initialize leds
 void led_init()
@@ -99,21 +100,30 @@ void blink_four_times(){
 void ledGame(){
     ledSeconds++;
     if (ledSeconds >= 500) { // once every 2 seconds
-        ledSeconds = 0;
-        random_led = random_int_generator();
-        switch (random_led) {
-            case 1:
-                greenOn(); // Turn on green LED
-                break;
-            case 2:
-                redOn(); // Turn on red LED
-                break;
-            case 3:
-                lightsOn(); // Turn on both LEDs
-                break;
-            case 4:
-                lightsOff(); // Turn off both LEDs
-                break;
+        if (ledSecondCount){    // leds have changed once
+            if (!buttonFlag){   // if no user input, end game
+                updateGameOver();
+            }
+            buttonFlag = 0;     // reset button flag
+            ledSecondCount = 0; // reset total second counter
+        } else {
+            ledSecondCount++;
+            ledSeconds = 0;
+            random_led = random_int_generator(); // get random int (1-4)
+            switch (random_led) {
+                case 1:
+                    greenOn(); // Turn on green LED
+                    break;
+                case 2:
+                    redOn(); // Turn on red LED
+                    break;
+                case 3:
+                    lightsOn(); // Turn on both LEDs
+                    break;
+                case 4:
+                    lightsOff(); // Turn off both LEDs
+                    break;
+            }
         }
     }
 }
@@ -125,8 +135,9 @@ void updateGameOver(){
     lightsOff();
     ledSeconds = 0;
     buzzSeconds = 0;
+    ledSecondCount = 0;
+    buzzSecondCount = 0;
     transition(GAMEOVER);
-    
 }
 
 // prerequisites to switching state to PREGAME

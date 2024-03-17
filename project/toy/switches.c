@@ -45,6 +45,7 @@ switch_init()
 void
 switch_interrupt_handler()
 {
+    // store values of current state of switches
     char p1val = switch_update_interrupt_sense_1();
     char p2val = switch_update_interrupt_sense_2();
     
@@ -60,6 +61,9 @@ switch_interrupt_handler()
     char button3 = (p2val & SW3) ? 0 : 1;
     char button4 = (p2val & SW4) ? 0 : 1;
     if (current_state == DURINGGAME){
+        // if any button is pressed, set button flag on
+        if (button1 | button2 | button3 | button4)
+            buttonFlag = 1;
         // if button is pressed, check if answer is correct
         // if answer does not match current output, exit the game
         if (button1) {

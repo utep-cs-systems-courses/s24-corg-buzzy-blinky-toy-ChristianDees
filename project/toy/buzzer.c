@@ -2,6 +2,7 @@
 #include "libTimer.h"
 #include <stdlib.h>
 #include "buzzer.h"
+#include "led.h"
 
 // buzzer vars
 int buzzSeconds = 0;        // number of times function is called during each interrupt
@@ -48,7 +49,7 @@ void buzz_four_times(){
 
 // buzz once during game led change
 void buzz_once(void){
-    if(buzzSecondCount == 1){
+    if(buzzSecondCount == 2){
         buzzSecondCount = 0;     // reset total second counter
     }
     buzzSeconds++;
@@ -56,7 +57,10 @@ void buzz_once(void){
         buzzer_set_period(0);
         if (buzzSeconds >= 500){ // buzzer on after 1 second
             buzzSeconds = 0;
-            buzzer_set_period(4545);
+            if(!buttonFlag && buzzSecondCount >= 1) // if no input, don't buzz again
+                buzzer_set_period(0);
+            else
+                buzzer_set_period(4545);    // if there is input, buzz for next set of leds
             buzzSecondCount++;
         }
     }

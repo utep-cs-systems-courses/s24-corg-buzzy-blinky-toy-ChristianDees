@@ -10,5 +10,6 @@ void buzz_game_over();
 
 // external var
 extern int buzzSeconds;
+extern char buzzSecondCount;
 
 #endif

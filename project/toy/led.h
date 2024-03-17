@@ -20,4 +20,6 @@ void updateGameOver();
 void updatePreGame();
 
 extern char random_led;
+extern char buttonFlag;
+
 #endif
