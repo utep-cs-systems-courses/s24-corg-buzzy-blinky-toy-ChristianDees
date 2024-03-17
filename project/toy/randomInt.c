@@ -8,17 +8,18 @@ void adc_init() {
     P1DIR &= ~BIT1; // clears bit one
     P1SEL |= BIT1;  // set bit to port 1 select register
                     // makes pin configured for a "special function"
-    // ADC10CTL0 -> ADC + it's a 10 bit register + control 0 register
-    // ADC10SHT_3 set sample hold time to 8 cycles
+    // ADC10CTL0 -> ADC + 10 bit converesions + control 0 register
+    // ADC10SHT_0 set sample hold time to 4 ADC10CLK cycles
     // ADC10ON sets ADC module on
-    // 8 clock cycles for it to accurately convert the voltage to
+    // 4 clock cycles for it to quickly convert the voltage to
+    // 4 clock cycles as accuracy doesn't matter for this case
     // a digital value
-    ADC10CTL0 = ADC10SHT_2 + ADC10ON;
+    ADC10CTL0 = ADC10SHT_0 + ADC10ON;
     ADC10CTL1 = INCH_1; // specify analog input channel to A1/bit 1
 }
 
 int random_int_generator() {
-    // ENC -> enable ADC conversion + set ADC10SC bit to start it
+    // ENC -> enable ADC conversion + set ADC10SC bit to start conversion
     ADC10CTL0 |= ENC + ADC10SC;
 
     // wait for conversion to finish
