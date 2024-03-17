@@ -52,7 +52,7 @@ switch_interrupt_handler()
     // if side button is pressed, transition to pregame state
     if (current_state == WAITING){
         if (!(p1val & SW0)) {
-            updatePreGame();
+            update_pre_game();
         }
     }
     // set button value to 1 if pressed
@@ -63,21 +63,21 @@ switch_interrupt_handler()
     if (current_state == DURINGGAME){
         // if any button is pressed, set button flag on
         if (button1 | button2 | button3 | button4)
-            buttonFlag = 1;
+            button_flag = 1;
         // if button is pressed, check if answer is correct
         // if answer does not match current output, exit the game
         if (button1) {
             if ((random_led) != 1)
-                updateGameOver();
+                update_game_over();
         } else if (button2) {
             if ((random_led) != 2)
-                updateGameOver();
+                update_game_over();
         } else if (button3) {
             if ((random_led) != 3)
-                updateGameOver();
+                update_game_over();
         } else if (button4) {
             if ((random_led) != 4)
-                updateGameOver();
+                update_game_over();
         }
     }
 }

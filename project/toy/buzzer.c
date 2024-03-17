@@ -5,9 +5,9 @@
 #include "led.h"
 
 // buzzer vars
-int buzzSeconds = 0;        // number of times function is called during each interrupt
-char buzzSecondCount = 0;   // count of buzzSeconds var
-char buzzToggler = 0;       // char toggler indicating when buzzer should be on/off
+int buzz_seconds = 0;        // number of times function is called during each interrupt
+char buzz_second_count = 0;   // count of buzz_seconds var
+char buzz_toggler = 0;       // char toggler indicating when buzzer should be on/off
 
 
 // initialize the buzzer and config timer A to generate PWM (pulse with modulation)
@@ -32,35 +32,35 @@ void buzzer_set_period(short cycles)
 
 // buzz 3 times for pregame state
 void buzz_four_times(){
-    if (buzzSecondCount == 8)
-        buzzSecondCount = 0;    // reset total second counter
-    buzzSeconds++;
-    if (buzzSeconds >= 125) {   // once every half second
-        buzzSeconds = 0;
-        buzzSecondCount++;
-        buzzToggler ^= 1;       // "turn on/off" buzzer
+    if (buzz_second_count == 8)
+        buzz_second_count = 0;    // reset total second counter
+    buzz_seconds++;
+    if (buzz_seconds >= 125) {   // once every half second
+        buzz_seconds = 0;
+        buzz_second_count++;
+        buzz_toggler ^= 1;       // "turn on/off" buzzer
         buzzer_set_period(4545);
-        if (!(buzzToggler))     // if buzzer should be off, set frequency 0
+        if (!(buzz_toggler))     // if buzzer should be off, set frequency 0
           buzzer_set_period(0);
-        if (buzzSecondCount==7) // on fourth buzz, buzz higher pitch
+        if (buzz_second_count==7) // on fourth buzz, buzz higher pitch
             buzzer_set_period(2000);
     }
 }
 
 // buzz once during game led change
 void buzz_once(void){
-    buzzSeconds++;
-    if(buzzSeconds >= 125){         // turn buzzer off after half a second
+    buzz_seconds++;
+    if(buzz_seconds >= 125){         // turn buzzer off after half a second
         buzzer_set_period(0);
-        if (buzzSeconds >= 500){    // buzzer on after 1 second
-            if(buzzSecondCount){    // after the first buzz
-                if (!buttonFlag){   // if no input, turn buzzer off
+        if (buzz_seconds >= 500){    // buzzer on after 1 second
+            if(buzz_second_count){    // after the first buzz
+                if (!button_flag){   // if no input, turn buzzer off
                     buzzer_set_period(0);
                 }
-                buzzSecondCount = 0;        // reset total second counter
+                buzz_second_count = 0;        // reset total second counter
             } else {
-                buzzSecondCount++;
-                buzzSeconds = 0;
+                buzz_second_count++;
+                buzz_seconds = 0;
                 buzzer_set_period(4545);    // if there is input, buzz for next set of leds
             }
         }
@@ -69,18 +69,18 @@ void buzz_once(void){
 
 // buzz 2 times when game ends
 void buzz_game_over(){
-    if (buzzSecondCount == 4){
-        buzzSecondCount = 0;     // reset total second counter
+    if (buzz_second_count == 4){
+        buzz_second_count = 0;     // reset total second counter
     }
-    buzzSeconds++;
-    if (buzzSeconds >= 90) {     // once every 90th of a second
-        buzzSeconds = 0;
-        buzzSecondCount++;
-        buzzToggler ^= 1;        // "toggle buzzer on/off"
+    buzz_seconds++;
+    if (buzz_seconds >= 90) {     // once every 90th of a second
+        buzz_seconds = 0;
+        buzz_second_count++;
+        buzz_toggler ^= 1;        // "toggle buzzer on/off"
         buzzer_set_period(8000);
-        if (!(buzzToggler))      // if buzzer is not on, set frequency to 0
+        if (!(buzz_toggler))      // if buzzer is not on, set frequency to 0
           buzzer_set_period(0);
-        if (buzzSecondCount==3){ // on second buzz, make lower pitch
+        if (buzz_second_count==3){ // on second buzz, make lower pitch
             buzzer_set_period(15000);
         }
     }

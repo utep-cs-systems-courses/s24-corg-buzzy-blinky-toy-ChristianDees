@@ -20,13 +20,13 @@ void state_pregame() {
 // during game state: change leds
 void state_duringgame() {
     buzz_once();
-    ledGame();
+    led_game();
 }
 
 // during game over: blink/buzz twice
 void state_gameover(){
     buzz_game_over();
-    ledGameOver();
+    led_game_over();
 }
 
 // transition to next state

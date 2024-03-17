@@ -9,7 +9,7 @@ void buzz_four_times();
 void buzz_game_over();
 
 // external vars
-extern int buzzSeconds;
-extern char buzzSecondCount;
+extern int buzz_seconds;
+extern char buzz_second_count;
 
 #endif

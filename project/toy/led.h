@@ -9,19 +9,19 @@
 
 // prototype functions
 void led_init();
-void greenOn();
-void redOn();
-void lightsOn();
-void lightsOff();
+void green_on();
+void red_on();
+void lights_on();
+void lights_off();
 void dtb_btd();
 void blink_four_times();
-void ledGame();
-void ledGameOver();
-void updateGameOver();
-void updatePreGame();
+void led_game();
+void led_game_over();
+void update_game_over();
+void update_pre_game();
 
 // external vars
 extern char random_led;
-extern char buttonFlag;
+extern char button_flag;
 
 #endif

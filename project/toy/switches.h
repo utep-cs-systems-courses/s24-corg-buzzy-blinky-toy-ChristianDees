@@ -13,6 +13,5 @@
 void switch_update_interrupt_sense();
 void switch_init();
 void switch_interrupt_handler();
-void updateGameOver();
 
 #endif
