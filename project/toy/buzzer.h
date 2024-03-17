@@ -7,5 +7,6 @@ void buzz_once();
 void buzz_four_times();
 void buzz_game_over();
 
+extern int buzzSeconds;
 
 #endif // included

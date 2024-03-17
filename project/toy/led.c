@@ -11,20 +11,10 @@ int green_blinkLimit = 5; // initially keep green dim
 int red_blinkLimit = 1;  // initially keep red bright
 int green_blinkCount = 0;
 int red_blinkCount = 0;
-int secondCount = 0;
 
-// blink_four_times() vars
-int countSeconds = 0;
-int thirdCount = 0;
-
-// ledGame() vars
+int ledSeconds = 0;
+int ledSecondCount = 0;
 int random_led = 0;
-int second = 0;
-
-
-// ledGameOver() vars
-int gameOverSeconds = 0;
-int gameOverCount = 0;
 
 
 // initialize leds
@@ -72,9 +62,9 @@ void dtb_btd(){
     } else if (red_blinkCount < red_blinkLimit)
     P1OUT &= ~LED_RED; // clear red
     red_blinkCount++;
-    secondCount ++;
-    if (secondCount >= 250) {  // once each second
-      secondCount = 0;
+    ledSeconds ++;
+    if (ledSeconds >= 250) {  // once each second
+      ledSeconds = 0;
       red_blinkLimit ++;// make red blink more (get dimmer)
       green_blinkLimit --; // make green blink less (get less dim)
       if (green_blinkLimit <= 0)
@@ -86,17 +76,16 @@ void dtb_btd(){
 
 // blink countdown (red, red, red, green)
 void blink_four_times(){
-    if (thirdCount == 8){
-        countSeconds = 0;
-        thirdCount = 0;
-        P1OUT &= ~LEDS;
+    if (ledSecondCount == 8){
+        ledSecondCount = 0;
+        lightsOff();
         transition(DURINGGAME); // once done blinking, start game
     }
-    countSeconds ++;
-    if (countSeconds >= 125) {     // once each second
-      countSeconds = 0; // reset count
-      thirdCount++;
-        if (thirdCount > 6){
+    ledSeconds ++;
+    if (ledSeconds >= 125) {     // once each second
+        ledSeconds = 0; // reset count
+        ledSecondCount++;
+        if (ledSecondCount > 6){
             P1OUT &= ~LED_RED;
             P1OUT |= LED_GREEN; // turn green on last blink
         } else {
@@ -107,9 +96,9 @@ void blink_four_times(){
 
 // random leds every 2 seconds
 void ledGame(){
-    second++;
-    if (second >= 500) { // once every 2 seconds
-        second = 0;
+    ledSeconds++;
+    if (ledSeconds >= 500) { // once every 2 seconds
+        ledSeconds = 0;
         random_led = random_int_generator();
         switch (random_led) {
             case 1:
@@ -133,7 +122,10 @@ void ledGame(){
 void updateGameOver(){
     buzzer_set_period(0);
     lightsOff();
+    ledSeconds = 0;
+    buzzSeconds = 0;
     transition(GAMEOVER);
+    
 }
 
 // prerequisites to switching state to PREGAME
@@ -144,7 +136,8 @@ void updatePreGame(){
     red_blinkLimit = 1;
     green_blinkCount = 0;
     red_blinkCount = 0;
-    secondCount = 0;
+    buzzSeconds = 0;
+    ledSeconds = 0;
     transition(PREGAME);
 }
 
