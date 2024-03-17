@@ -15,5 +15,5 @@ Button  | Answer
 
 ## How to Use
 
-The Makefile in this direcory (the project directory) contains rules to run the Makefile in within the toy directory. Use **make** in this directory to build the toy program and the timer library. Once the program is built, you can load the program onto the MSP430 by changing into the toy directory and using **make load**.
+The Makefile in this direcory (the project directory) contains rules to run the Makefile in within the toy directory. Use **make all** in this directory to build the toy program and the timer library. Once the program is built, you can load the program onto the MSP430 by changing into the toy directory and using **make load**.
 
