@@ -52,6 +52,7 @@ switch_interrupt_handler()
     // if side button is pressed, transition to pregame state
     if (current_state == WAITING){
         if (!(p1val & SW0)) {
+            
             update_pre_game();
         }
     }

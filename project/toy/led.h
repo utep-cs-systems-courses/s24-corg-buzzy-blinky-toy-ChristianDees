@@ -17,8 +17,9 @@ void dtb_btd();
 void blink_four_times();
 void led_game();
 void led_game_over();
-void update_game_over();
 void update_pre_game();
+void update_during_game();
+void update_game_over();
 
 // external vars
 extern char random_led;
