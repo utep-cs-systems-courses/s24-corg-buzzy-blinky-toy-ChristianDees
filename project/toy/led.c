@@ -8,7 +8,7 @@
 
 // dtb_btd() vars
 char green_blinkLimit = 5; // initially keep green dim
-char red_blinkLimit = 1;  // initially keep red bright
+char red_blinkLimit = 1;   // initially keep red bright
 char green_blinkCount = 0;
 char red_blinkCount = 0;
 
@@ -17,7 +17,7 @@ int led_seconds = 0;        // counts each interrupt occuring
 char led_second_count = 0;  // total seconds passed
 char random_led = 0;        // random led 1-4
 int led_speed = 500;        // easy level speed
-int led_changes = 0;        // total led changes, used for speeding up led
+char led_changes = 0;       // total led changes, used for speeding up led
 char button_flag = 0;       // button pressed flag
 
 // initialize leds
@@ -95,19 +95,18 @@ void blink_four_times(){
     }
 }
 
-// random leds every 2 seconds
+// random led changes
 void led_game(){
     led_seconds++;
-    if (led_seconds >= led_speed) {   // once every 2 seconds
+    if (led_seconds >= led_speed) {   // once every led_speed
         if (led_second_count){        // leds have changed once
             if (!button_flag){        // if no user input, end game
                 update_game_over();
-            } else{
-                if (led_changes < 10) // only increase led_changes to 10
-                    led_changes++;    //
-                button_flag = 0;      // reset button flag
-                led_second_count = 0; // reset total second counter
             }
+            if (led_changes < 16) // increment only up to 15
+                led_changes++;    //
+            button_flag = 0;      // reset button flag
+            led_second_count = 0; // reset total second counter
         } else {
             led_second_count++;
             led_seconds = 0;
@@ -127,10 +126,8 @@ void led_game(){
                     break;
             }
         }
-        if (((led_changes % 3)==0) && led_changes <= 6){ // medium levels
-            led_speed -= 50; // make led change faster
-        } else if (led_changes == 9) // hard level
-            led_speed -= 10; // make led change even faster
+        if (((led_changes % 3)==0) && led_changes <= 15) // 5 levels, increasingly getting faster
+            led_speed -= .10*led_speed; // leds change faster
     }
 }
 

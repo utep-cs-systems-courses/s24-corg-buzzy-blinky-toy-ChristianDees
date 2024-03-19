@@ -35,12 +35,12 @@ void buzzer_set_period(short cycles)
 // buzz 3 times for pregame state
 void buzz_four_times(){
     buzz_seconds++;
-    if (buzz_seconds >= 125) {   // once every half second
+    if (buzz_seconds >= 125) {    // once every half second
         buzz_seconds = 0;
         buzz_second_count++;
-        buzz_toggler ^= 1;       // "turn on/off" buzzer
+        buzz_toggler ^= 1;        // "turn on/off" buzzer
         buzzer_set_period(4545);
-        if (!(buzz_toggler))     // if buzzer should be off, set frequency 0
+        if (!(buzz_toggler))      // if buzzer should be off, set frequency 0
           buzzer_set_period(0);
         if (buzz_second_count==7) // on fourth buzz, buzz higher pitch
             buzzer_set_period(2000);
@@ -54,24 +54,17 @@ void buzz_once(void){
         buzzer_set_period(0);
         if (buzz_seconds >= buzz_speed_main){ // buzzer on after set speed
             if(buzz_second_count){            // after the first buzz
-                if (!button_flag){            // if no input, turn buzzer off
-                    buzzer_set_period(0);
-                } else{
-                    if (buzz_changes < 10)    // increment only up to 10
-                        buzz_changes++;
-                    buzz_second_count = 0;    // reset total second counter
-                }
+                if (buzz_changes < 16)    // increment only up to 15
+                    buzz_changes++;
+                buzz_second_count = 0;    // reset total second counter
             } else {
                 buzz_second_count++;
                 buzz_seconds = 0;
-                buzzer_set_period(4545);      // if there is input, buzz for next set of leds
+                buzzer_set_period(4545);  // if there is input, buzz for next set of leds
             }
-            if (((buzz_changes % 3)==0) && buzz_changes <= 6){  // first two levels, increase speed by same amount
-                buzz_speed_main -= 50;
-                buzz_speed_quarter = .25*buzz_speed_main;
-            } else if (buzz_changes == 9){                      // third level, increase speed very little
-                buzz_speed_main -= 10;
-                buzz_speed_quarter = .25*buzz_speed_main;
+            if (((buzz_changes % 3)==0) && buzz_changes <= 15){ // 5 levels of the game
+                buzz_speed_main -= .10*buzz_speed_main;         // turn on buzz faster
+                buzz_speed_quarter = .25*buzz_speed_main;       // turn off buzz faster
             }
         }
     }
