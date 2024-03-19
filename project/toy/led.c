@@ -104,7 +104,7 @@ void led_game(){
                 update_game_over();
             }
             if (led_changes < 16) // increment only up to 15
-                led_changes++;    //
+                led_changes++;    
             button_flag = 0;      // reset button flag
             led_second_count = 0; // reset total second counter
         } else {
@@ -126,7 +126,7 @@ void led_game(){
                     break;
             }
         }
-        if (((led_changes % 3)==0) && led_changes <= 15) // 5 levels, increasingly getting faster
+        if (((led_changes % 3)==0) && led_changes <= 15) // 6 levels, increasingly getting faster
             led_speed -= .10*led_speed; // leds change faster
     }
 }

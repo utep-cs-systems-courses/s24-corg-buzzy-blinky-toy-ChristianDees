@@ -5,22 +5,22 @@
 
 
 // return change based on switch interrupt in port 1
+// configure port 1 interrupt edge select
 char
 switch_update_interrupt_sense_1()
 {
     char p1val = P1IN;
-    P1IES |= (p1val & SW0);    // if switch up, sense down
-    P1IES &= (p1val | ~SW0);   // if switch down, sense up
+    P1IES |= (p1val & SW0);       // activate interrupt if low to high (rising edge)
     return p1val;
 }
 
 // return change based on switch interrupt in port 2
+// configure port 2 interrupt edge select
 char
 switch_update_interrupt_sense_2()
 {
     char p2val = P2IN;
-    P2IES |= (p2val & SWITCHES);    // if switch up, sense down
-    P2IES &= (p2val | ~SWITCHES);   // if switch down, sense up
+    P2IES |= (p2val & SWITCHES);  // activate interrupt if low to high (rising edge)
     return p2val;
 }
 

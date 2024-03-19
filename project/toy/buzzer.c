@@ -62,7 +62,7 @@ void buzz_once(void){
                 buzz_seconds = 0;
                 buzzer_set_period(4545);  // if there is input, buzz for next set of leds
             }
-            if (((buzz_changes % 3)==0) && buzz_changes <= 15){ // 5 levels of the game
+            if (((buzz_changes % 3)==0) && buzz_changes <= 15){ // 6 levels of the game
                 buzz_speed_main -= .10*buzz_speed_main;         // turn on buzz faster
                 buzz_speed_quarter = .25*buzz_speed_main;       // turn off buzz faster
             }
