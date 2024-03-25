@@ -9,7 +9,7 @@ __interrupt_vec(WDT_VECTOR) WDT()   // 250 times per second
         case WAITING:       // default state: dimming lights
             state_waiting();
             break;
-        case EASTEREGG:
+        case EASTEREGG:     // play mario theme
             state_easter_egg();
             break;
         case PREGAME:       // countdown to game

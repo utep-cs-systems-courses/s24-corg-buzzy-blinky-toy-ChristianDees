@@ -2,7 +2,6 @@
 #include "libTimer.h"
 #include <stdlib.h>
 #include "buzzer.h"
-#include "led.h"
 
 // buzzer vars
 int buzz_seconds = 0;           // number of times function is called during each interrupt
@@ -30,6 +29,21 @@ void buzzer_set_period(short cycles)
   // capture compare registers
   CCR0 = cycles;        // set period of PWM (how often PWM repeats itself)
   CCR1 = cycles >> 1;   // signal is on same time it is off (making a stable waveform)
+}
+
+// buzz mario theme
+void mario_buzzer(){
+    int notes[58] = {6060, 0, 6060, 0, 0, 6060, 0, 0, 7640, 0, 6060, 0, 5100,5100,0,0,
+        5100,0,0,7640,0,0,5100,0,0,6060,0,0,4540,0,4040,
+        0,4040,0,4540,0,5100,0,6060,0,5100,0,4540,0,5720,0,
+    5100,0,0,6060,0,7640,0,6820,0,4040,0,0};
+    buzz_seconds++;
+    if (buzz_seconds >= 31) {   // every 31th of a second
+        buzz_seconds = 0;
+        buzz_second_count++;
+        int index = buzz_second_count - 1;
+        buzzer_set_period(notes[index]);    // play current note of song
+    }
 }
 
 // buzz 3 times for pregame state
@@ -72,9 +86,6 @@ void buzz_once(void){
 
 // buzz 2 times when game ends
 void buzz_game_over(){
-    if (buzz_second_count == 4){
-        buzz_second_count = 0;     // reset total second counter
-    }
     buzz_seconds++;
     if (buzz_seconds >= 90) {      // once every 90th of a second
         buzz_seconds = 0;
@@ -85,25 +96,6 @@ void buzz_game_over(){
           buzzer_set_period(0);
         if (buzz_second_count==3){ // on second buzz, make lower pitch
             buzzer_set_period(15000);
-        }
-    }
-}
-
-
-void mario_buzzer(){
-    int notes[58] = {6060, 0, 6060, 0, 0, 6060, 0, 0, 7640, 0, 6060, 0, 5100,5100,0,0,
-        5100,0,0,7640,0,0,5100,0,0,6060,0,0,4540,0,4040,
-        0,4040,0,4540,0,5100,0,6060,0,5100,0,4540,0,5720,0,
-    5100,0,0,6060,0,7640,0,6820,0,4040,0,0};
-    if (buzz_second_count == 58) {
-        buzzer_set_period(0);
-    } else {
-        buzz_seconds++;
-        if (buzz_seconds >= 31) {
-            buzz_seconds = 0;
-            buzz_second_count++;
-            int index = buzz_second_count - 1;
-            buzzer_set_period(notes[index]);
         }
     }
 }

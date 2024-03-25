@@ -14,13 +14,12 @@ void red_on();
 void lights_on();
 void lights_off();
 void dtb_btd();
+void mario_led();
 void blink_four_times();
 void led_game();
 void led_game_over();
-void update_pre_game();
-void update_during_game();
+void update_vars();
 void update_game_over();
-void mario_led();
 
 // external vars
 extern char random_led;

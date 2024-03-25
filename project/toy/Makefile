@@ -21,12 +21,3 @@ load: combined.elf
 
 clean:
 	rm -f *.o *.elf
-
-buzzer.c: buzzer.h led.h
-stateMachines.c: stateMachines.h led.h buzzer.h
-switches.c: switches.h led.h stateMachines.h
-main.c: led.h switches.h buzzer.h randomInt.h
-led.c: led.h stateMachines.h buzzer.h randomInt.h
-p1_interrupt_handler.c: switches.h
-p2_interrupt_handler.c: switches.h
-vector_interrupt_handlers.c: stateMachines.h

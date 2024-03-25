@@ -11,15 +11,16 @@ void state_waiting() {
     dtb_btd();
 }
 
-void state_easter_egg(){
-    mario_buzzer();
-    mario_led();
-}
-
 // pregame state: countdown
 void state_pregame() {
     buzz_four_times();
     blink_four_times();
+}
+
+// easter egg state: play mario theme
+void state_easter_egg(){
+    mario_buzzer();
+    mario_led();
 }
 
 // during game state: change leds

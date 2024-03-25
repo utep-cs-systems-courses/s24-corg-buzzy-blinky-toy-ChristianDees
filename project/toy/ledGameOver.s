@@ -5,7 +5,6 @@
     .extern P1OUT                ; led output var
     .extern led_seconds          ; seconds var
     .extern led_second_count     ; interrupt count var
-    .extern easter_egg           ;
     .extern transition           ; state transition function
 led_game_over:
     cmp.b #4, &led_second_count  ; interrupt count - 4
@@ -23,6 +22,5 @@ wait:
 reset_state:
     mov.b #0, &led_second_count  ; reset interrupt count to 0
     mov #0, &led_seconds         ; reset led_seconds var to 0
-    mov.b #0, &easter_egg
     mov #0, r12                  ; set 0 to register 12
     call #transition             ; calls transition(0), setting state to WAITING
