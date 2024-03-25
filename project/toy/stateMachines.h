@@ -3,6 +3,7 @@
 // states
 typedef enum {
     WAITING = 0,
+    EASTEREGG,
     PREGAME,
     DURINGGAME,
     GAMEOVER
@@ -10,6 +11,7 @@ typedef enum {
 
 // function prototypes
 void state_waiting();
+void state_easter_egg();
 void state_pregame();
 void state_duringgame();
 void state_gameover();

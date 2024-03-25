@@ -88,3 +88,22 @@ void buzz_game_over(){
         }
     }
 }
+
+
+void mario_buzzer(){
+    int notes[58] = {6060, 0, 6060, 0, 0, 6060, 0, 0, 7640, 0, 6060, 0, 5100,5100,0,0,
+        5100,0,0,7640,0,0,5100,0,0,6060,0,0,4540,0,4040,
+        0,4040,0,4540,0,5100,0,6060,0,5100,0,4540,0,5720,0,
+    5100,0,0,6060,0,7640,0,6820,0,4040,0,0};
+    if (buzz_second_count == 58) {
+        buzzer_set_period(0);
+    } else {
+        buzz_seconds++;
+        if (buzz_seconds >= 31) {
+            buzz_seconds = 0;
+            buzz_second_count++;
+            int index = buzz_second_count - 1;
+            buzzer_set_period(notes[index]);
+        }
+    }
+}

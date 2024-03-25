@@ -11,6 +11,7 @@ switch_update_interrupt_sense_1()
 {
     char p1val = P1IN;
     P1IES |= (p1val & SW0);       // activate interrupt if low to high (rising edge)
+    P1IES &= (p1val | ~SW0);      // activate interrupt if high to low (falling edge)
     return p1val;
 }
 
@@ -52,6 +53,8 @@ switch_interrupt_handler()
     // if side button is pressed, transition to pregame state
     if (current_state == WAITING){
         if (!(p1val & SW0)) {
+            easter_egg = 1;
+        } else {
             
             update_pre_game();
         }

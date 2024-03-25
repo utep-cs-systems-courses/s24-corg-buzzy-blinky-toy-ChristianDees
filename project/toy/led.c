@@ -20,6 +20,8 @@ int led_speed = 500;        // easy level speed
 char led_changes = 0;       // total led changes, used for speeding up led
 char button_flag = 0;       // button pressed flag
 
+
+char easter_egg = 0;
 // initialize leds
 void led_init()
 {
@@ -53,27 +55,39 @@ void lights_off(){
 // green starts dim, gradually getting brighter
 // red starts bright, gradually getting dimmer
 void dtb_btd(){
-    green_blinkCount++;
-    if (green_blinkCount >= green_blinkLimit) { // on for 1 interrupt period
-      green_blinkCount = 0;
-      P1OUT |= LED_GREEN;   // set green
-    } else if (green_blinkCount < green_blinkLimit)
-      P1OUT &= ~LED_GREEN;  // clear green
-    if (red_blinkCount >= red_blinkLimit){
-      red_blinkCount = 0;
-      P1OUT |=  LED_RED;    // set red
-    } else if (red_blinkCount < red_blinkLimit)
-    P1OUT &= ~LED_RED;      // clear red
-    red_blinkCount++;
-    led_seconds ++;
-    if (led_seconds >= 250) {  // once each second
-      led_seconds = 0;
-      red_blinkLimit ++;       // make red blink more (get dimmer)
-      green_blinkLimit --;     // make green blink less (get less dim)
-      if (green_blinkLimit <= 0)
-         green_blinkLimit = 5; // reset green to 5 blinks
-      if (red_blinkLimit > 5)
-         red_blinkLimit = 1;   // reset red to 1 blink
+    if (led_second_count == 3){
+        led_seconds = 0;
+        led_second_count = 0;
+        easter_egg = 0;
+        P1OUT &= ~LEDS;
+        buzz_seconds = 0;
+        buzz_second_count = 0;
+        transition(EASTEREGG);
+    } else {
+        green_blinkCount++;
+        if (green_blinkCount >= green_blinkLimit) { // on for 1 interrupt period
+            green_blinkCount = 0;
+            P1OUT |= LED_GREEN;   // set green
+        } else if (green_blinkCount < green_blinkLimit)
+            P1OUT &= ~LED_GREEN;  // clear green
+        if (red_blinkCount >= red_blinkLimit){
+            red_blinkCount = 0;
+            P1OUT |=  LED_RED;    // set red
+        } else if (red_blinkCount < red_blinkLimit)
+            P1OUT &= ~LED_RED;      // clear red
+        red_blinkCount++;
+        led_seconds ++;
+        if (led_seconds >= 250) {  // once each second
+            if (easter_egg)
+                led_second_count++;
+            led_seconds = 0;
+            red_blinkLimit ++;       // make red blink more (get dimmer)
+            green_blinkLimit --;     // make green blink less (get less dim)
+            if (green_blinkLimit <= 0)
+                green_blinkLimit = 5; // reset green to 5 blinks
+            if (red_blinkLimit > 5)
+                red_blinkLimit = 1;   // reset red to 1 blink
+        }
     }
 }
 
@@ -143,6 +157,9 @@ void update_pre_game(){
     red_blinkCount = 0;
     buzz_seconds = 0;
     led_seconds = 0;
+    buzz_second_count = 0;
+    led_second_count = 0;
+    easter_egg = 0;
     transition(PREGAME);
 }
 
@@ -173,4 +190,34 @@ void update_game_over(){
     led_second_count = 0;
     buzz_second_count = 0;
     transition(GAMEOVER);
+}
+char lights[58] = {2, 0, 2, 0, 0, 2, 0, 0, 1,
+    0, 2, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
+    0, 0, 2, 0, 0, 1, 0, 2, 0, 2, 0, 1, 0, 1,
+    0, 2, 0, 1, 0, 1, 0, 2, 0, 1, 0, 0, 2, 0,
+    1, 0, 1, 0, 2, 0, 0};
+
+void mario_led(){
+    if (led_second_count == 58){
+        led_seconds = 0;
+        led_second_count = 0;
+        buzzer_set_period(0);
+        buzz_seconds = 0;
+        buzz_second_count = 0;
+        easter_egg = 0;
+        transition(WAITING);
+    } else {
+        led_seconds++;
+        if (led_seconds>=31){
+            led_seconds = 0;
+            led_second_count++;
+            int index = led_second_count - 1;
+            if (lights[index] == 0)
+                lights_off();
+            if (lights[index] == 1)
+                green_on();
+            if (lights[index] == 2)
+                red_on();
+        }
+    }
 }
