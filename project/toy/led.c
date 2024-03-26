@@ -21,7 +21,20 @@ char button_flag = 0;       // button pressed flag
 
 // easter egg flag
 char easter_egg = 0;
+int easterEggSeconds = 0;
 
+// side button timers
+int interruptSeconds = 0;
+char interruptCounter = 0;
+
+// mario theme lights
+char mario_lights[49] = {2,0,2,0,0,2,0,0,1,0,
+     2,0,1,1,0,0,1,0,0,2,0,0,1,0,0,2,0,0,1,0,
+     1,0,1,0,2,0,1,0,2,0,1,0,2,0,1,0,1,0,0};
+
+// star wars leds
+char star_wars_lights[26] = {2,2,0,2,2,0,2,2,0,
+            1,1,0,2,0,1,1,0,2,2,0,1,0,2,2,2,2};
 
 // initialize leds
 void led_init()
@@ -56,10 +69,28 @@ void lights_off(){
 // green starts dim, gradually getting brighter
 // red starts bright, gradually getting dimmer
 void dtb_btd(){
+    // begin counter once button released
+    if (interruptCounter)
+        interruptSeconds++;
+    // begin counter once button pressed
+    if (easter_egg)
+        easterEggSeconds++;
+    // move to easter egg state
+    // after button held for 3 seconds
     if (led_second_count == 3){
         update_vars();
         transition(EASTEREGG);
-    } else {
+    // if user presses button twice within 70/250 seconds
+    // move to second easter egg state
+    } else if (interruptCounter == 2 && interruptSeconds <= 70){
+        update_vars();
+        transition(SECONDEASTEREGG);
+    // if user presses button only once
+    // move to pregame state
+    }else if (interruptCounter == 1 && interruptSeconds > 70){
+        update_vars();
+        transition(PREGAME);
+    }else {
         green_blinkCount++;
         if (green_blinkCount >= green_blinkLimit) { // on for 1 interrupt period
             green_blinkCount = 0;
@@ -73,9 +104,12 @@ void dtb_btd(){
             P1OUT &= ~LED_RED;    // clear red
         red_blinkCount++;
         led_seconds ++;
-        if (led_seconds >= 250) { // once each second
-            if (easter_egg)
-                led_second_count++;
+        // count total seconds button held down
+        if (easterEggSeconds >= 250){ // once each second
+            led_second_count++;
+            easterEggSeconds = 0;
+        }
+        if (led_seconds >= 250) {     // once each second
             led_seconds = 0;
             red_blinkLimit ++;        // make red blink more (get dimmer)
             green_blinkLimit --;      // make green blink less (get less dim)
@@ -87,32 +121,43 @@ void dtb_btd(){
     }
 }
 
-// mario theme lights
-// 0 = lights off
-// 1 = green on
-// 2 = red on
-char lights[58] = {2, 0, 2, 0, 0, 2, 0, 0, 1,
-    0, 2, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
-    0, 0, 2, 0, 0, 1, 0, 2, 0, 2, 0, 1, 0, 1,
-    0, 2, 0, 1, 0, 1, 0, 2, 0, 1, 0, 0, 2, 0,
-    1, 0, 1, 0, 2, 0, 0};
-
 // light show to match the mario theme
 void mario_led(){
-    if (led_second_count == 58){
+    if (led_second_count == 49){
         update_vars();          // update all variables
         transition(WAITING);    // go back to waiting state when done
     } else {
         led_seconds++;
-        if (led_seconds>=31){
+        if (led_seconds>=31){   // every 31th of a second
             led_seconds = 0;
             led_second_count++;
             int index = led_second_count - 1;
-            if (lights[index] == 0)
+            if (mario_lights[index] == 0)
                 lights_off();
-            if (lights[index] == 1)
+            if (mario_lights[index] == 1)
                 green_on();
-            if (lights[index] == 2)
+            if (mario_lights[index] == 2)
+                red_on();
+        }
+    }
+}
+
+// light show to match the star wars theme
+void star_wars_led(){
+    if (led_second_count == 26){
+        update_vars();          // update all variables
+        transition(WAITING);    // go back to waiting state when done
+    } else {
+        led_seconds++;
+        if (led_seconds>=60){   // every 60th of a second
+            led_seconds = 0;
+            led_second_count++;
+            int index = led_second_count - 1;
+            if (star_wars_lights[index] == 0)
+                lights_off();
+            if (star_wars_lights[index] == 1)
+                green_on();
+            if (star_wars_lights[index] == 2)
                 red_on();
         }
     }
@@ -197,5 +242,10 @@ void update_vars(){
     buzzer_set_period(0);
     
     button_flag = 0;
+    
     easter_egg = 0;
+    easterEggSeconds = 0;
+    
+    interruptCounter = 0;
+    interruptSeconds = 0;
 }

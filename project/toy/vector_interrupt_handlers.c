@@ -12,6 +12,9 @@ __interrupt_vec(WDT_VECTOR) WDT()   // 250 times per second
         case EASTEREGG:     // play mario theme
             state_easter_egg();
             break;
+        case SECONDEASTEREGG: // play star wars theme
+            state_second_easter_egg();
+            break;
         case PREGAME:       // countdown to game
             state_pregame();
             break;

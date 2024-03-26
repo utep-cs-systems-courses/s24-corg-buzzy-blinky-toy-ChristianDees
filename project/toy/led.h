@@ -15,6 +15,7 @@ void lights_on();
 void lights_off();
 void dtb_btd();
 void mario_led();
+void star_wars_led();
 void blink_four_times();
 void led_game();
 void led_game_over();
@@ -25,5 +26,6 @@ void update_game_over();
 extern char random_led;
 extern char button_flag;
 extern char easter_egg;
+extern char interruptCounter;
 
 #endif

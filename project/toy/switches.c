@@ -42,6 +42,7 @@ switch_init()
     P2DIR &= ~SWITCHES;  // set main button's bits for input
 }
 
+
 // switch handler
 void
 switch_interrupt_handler()
@@ -62,8 +63,7 @@ switch_interrupt_handler()
             easter_egg = 1;
         // if and only if the side button is pressed
         } else if (!(button1 || button2 || button3 || button4)){
-            update_vars();
-            transition(PREGAME);
+            interruptCounter++;
         }
     }
     

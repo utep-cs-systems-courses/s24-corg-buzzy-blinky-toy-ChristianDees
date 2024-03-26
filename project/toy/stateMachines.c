@@ -23,6 +23,11 @@ void state_easter_egg(){
     mario_led();
 }
 
+void state_second_easter_egg(){
+    star_wars_buzzer();
+    star_wars_led();
+}
+
 // during game state: change leds
 void state_duringgame() {
     buzz_once();
@@ -38,5 +43,4 @@ void state_gameover(){
 // transition to next state
 void transition(State next_state) {
     current_state = next_state;
-    
 }

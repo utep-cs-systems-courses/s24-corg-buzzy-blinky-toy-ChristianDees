@@ -33,12 +33,27 @@ void buzzer_set_period(short cycles)
 
 // buzz mario theme
 void mario_buzzer(){
-    int notes[58] = {6060, 0, 6060, 0, 0, 6060, 0, 0, 7640, 0, 6060, 0, 5100,5100,0,0,
-        5100,0,0,7640,0,0,5100,0,0,6060,0,0,4540,0,4040,
-        0,4040,0,4540,0,5100,0,6060,0,5100,0,4540,0,5720,0,
-    5100,0,0,6060,0,7640,0,6820,0,4040,0,0};
+    int notes[49] = {6060, 0, 6060, 0, 0, 6060, 0, 0, 7640, 
+        0, 6060, 0, 5100,5100,0,0,5100,0,0,7640,0,0,5100,0,
+        0,6060,0,0,4540,0,4040,0,4040,0,4540,0,5100,0,6060,
+        0,5100,0,4540,0,5720,0, 5100,0,0};
     buzz_seconds++;
     if (buzz_seconds >= 31) {   // every 31th of a second
+        buzz_seconds = 0;
+        buzz_second_count++;
+        int index = buzz_second_count - 1;
+        buzzer_set_period(notes[index]);    // play current note of song
+    }
+}
+
+// buzz imperial march theme
+void star_wars_buzzer(){
+    int notes[26]={6500,6500,0,6500,6500,
+        0,6500,6500,0,9000,9000,0,5500,0,
+        6500,6500,0,9000,9000,0,5500,0,
+        6500,6500,6500,6500};
+    buzz_seconds++;
+    if (buzz_seconds >= 60) {   // every 31th of a second
         buzz_seconds = 0;
         buzz_second_count++;
         int index = buzz_second_count - 1;
