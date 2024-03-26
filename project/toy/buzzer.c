@@ -41,7 +41,7 @@ void mario_buzzer(){
     if (buzz_seconds >= 31) {   // every 31th of a second
         buzz_seconds = 0;
         buzz_second_count++;
-        int index = buzz_second_count - 1;
+        char index = buzz_second_count - 1;
         buzzer_set_period(notes[index]);    // play current note of song
     }
 }
@@ -56,7 +56,7 @@ void star_wars_buzzer(){
     if (buzz_seconds >= 60) {   // every 31th of a second
         buzz_seconds = 0;
         buzz_second_count++;
-        int index = buzz_second_count - 1;
+        char index = buzz_second_count - 1;
         buzzer_set_period(notes[index]);    // play current note of song
     }
 }

@@ -26,6 +26,6 @@ void update_game_over();
 extern char random_led;
 extern char button_flag;
 extern char easter_egg;
-extern char interruptCounter;
+extern char interrupt_counter;
 
 #endif

@@ -21,11 +21,11 @@ char button_flag = 0;       // button pressed flag
 
 // easter egg flag
 char easter_egg = 0;
-int easterEggSeconds = 0;
+int easter_egg_seconds = 0;
 
 // side button timers
-int interruptSeconds = 0;
-char interruptCounter = 0;
+int interrupt_seconds = 0;
+char interrupt_counter = 0;
 
 // mario theme lights
 char mario_lights[49] = {2,0,2,0,0,2,0,0,1,0,
@@ -70,11 +70,11 @@ void lights_off(){
 // red starts bright, gradually getting dimmer
 void dtb_btd(){
     // begin counter once button released
-    if (interruptCounter)
-        interruptSeconds++;
+    if (interrupt_counter)
+        interrupt_seconds++;
     // begin counter once button pressed
     if (easter_egg)
-        easterEggSeconds++;
+        easter_egg_seconds++;
     // move to easter egg state
     // after button held for 3 seconds
     if (led_second_count == 3){
@@ -82,12 +82,12 @@ void dtb_btd(){
         transition(EASTEREGG);
     // if user presses button twice within 70/250 seconds
     // move to second easter egg state
-    } else if (interruptCounter == 2 && interruptSeconds <= 70){
+    } else if (interrupt_counter == 2 && interrupt_seconds <= 70){
         update_vars();
         transition(SECONDEASTEREGG);
     // if user presses button only once
     // move to pregame state
-    }else if (interruptCounter == 1 && interruptSeconds > 70){
+    }else if (interrupt_counter == 1 && interrupt_seconds > 70){
         update_vars();
         transition(PREGAME);
     }else {
@@ -105,9 +105,9 @@ void dtb_btd(){
         red_blinkCount++;
         led_seconds ++;
         // count total seconds button held down
-        if (easterEggSeconds >= 250){ // once each second
+        if (easter_egg_seconds >= 250){ // once each second
             led_second_count++;
-            easterEggSeconds = 0;
+            easter_egg_seconds = 0;
         }
         if (led_seconds >= 250) {     // once each second
             led_seconds = 0;
@@ -131,7 +131,7 @@ void mario_led(){
         if (led_seconds>=31){   // every 31th of a second
             led_seconds = 0;
             led_second_count++;
-            int index = led_second_count - 1;
+            char index = led_second_count - 1;
             if (mario_lights[index] == 0)
                 lights_off();
             if (mario_lights[index] == 1)
@@ -152,7 +152,7 @@ void star_wars_led(){
         if (led_seconds>=60){   // every 60th of a second
             led_seconds = 0;
             led_second_count++;
-            int index = led_second_count - 1;
+            char index = led_second_count - 1;
             if (star_wars_lights[index] == 0)
                 lights_off();
             if (star_wars_lights[index] == 1)
@@ -221,7 +221,6 @@ void led_game(){
 
 // resets all vars before transitioning to new state
 void update_vars(){
-    
     lights_off();
     
     green_blinkLimit = 5;
@@ -244,8 +243,8 @@ void update_vars(){
     button_flag = 0;
     
     easter_egg = 0;
-    easterEggSeconds = 0;
+    easter_egg_seconds = 0;
     
-    interruptCounter = 0;
-    interruptSeconds = 0;
+    interrupt_counter = 0;
+    interrupt_seconds = 0;
 }

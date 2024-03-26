@@ -57,16 +57,16 @@ switch_interrupt_handler()
     char button3 = (p2val & SW3) ? 0 : 1;
     char button4 = (p2val & SW4) ? 0 : 1;
     
-    // if side button is pressed
+    // handling for side button
     if (current_state == WAITING){
-        if (!(p1val & SW0)) { // if side button is held
+        if (!(p1val & SW0))  // if side button is held
             easter_egg = 1;
         // if and only if the side button is pressed
-        } else if (!(button1 || button2 || button3 || button4)){
-            interruptCounter++;
-        }
+        else if (!(button1 || button2 || button3 || button4))
+            interrupt_counter++;
     }
     
+    // handling for main 4 buttons
     if (current_state == DURINGGAME){
         // if any button is pressed, set button flag on
         if (button1 | button2 | button3 | button4)
@@ -74,22 +74,22 @@ switch_interrupt_handler()
         // if button is pressed, check if answer is correct
         // if answer does not match current output, exit the game
         if (button1) {
-            if ((random_led) != 1)
-                goto gameOver;
+            if (random_led != 1)
+                goto game_over;
         } else if (button2) {
-            if ((random_led) != 2)
-                goto gameOver;
+            if (random_led != 2)
+                goto game_over;
         } else if (button3) {
-            if ((random_led) != 3)
-                goto gameOver;
+            if (random_led != 3)
+                goto game_over;
         } else if (button4) {
-            if ((random_led) != 4)
-                goto gameOver;
+            if (random_led != 4)
+                goto game_over;
         }
     }
     exit:
         return;
-    gameOver:
+    game_over:
         update_vars();
         transition(GAMEOVER);
         return;
