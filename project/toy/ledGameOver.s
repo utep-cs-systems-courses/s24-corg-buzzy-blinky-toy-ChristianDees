@@ -16,7 +16,7 @@ continue_game:
     jl wait                      ; while it has not reached 90/250 seconds, remain static
     xor #64, &P1OUT              ; toggle current red led output on/off
     mov #0, &led_seconds         ; set seconds to 0 once it has reached 90/250
-    add.b #1, &led_second_count  ; increment total interrupt count by 1
+    inc.b &led_second_count      ; increment total interrupt count by 1
 wait:
     ret                          ; do nothing
 reset_state:
@@ -24,3 +24,4 @@ reset_state:
     mov #0, &led_seconds         ; reset led_seconds var to 0
     mov #0, r12                  ; set 0 to register 12
     call #transition             ; calls transition(0), setting state to WAITING
+    

@@ -91,9 +91,11 @@ void buzz_once(void){
                 buzz_seconds = 0;
                 buzzer_set_period(4545);  // if there is input, buzz for next set of leds
             }
-            if (((buzz_changes % 3)==0) && buzz_changes <= 15){ // 6 levels of the game
-                buzz_speed_main -= .10*buzz_speed_main;         // turn on buzz faster
-                buzz_speed_quarter = .25*buzz_speed_main;       // turn off buzz faster
+            if (buzz_changes <= 10) {
+                if ((buzz_changes & 1) == 0 && buzz_changes != 0) { // Check if buzz_changes is even (excluding 0)
+                    buzz_speed_main -= buzz_speed_main >> 3;       // Equivalent to buzz_speed_main / 8
+                    buzz_speed_quarter = buzz_speed_main >> 2;     // Equivalent to buzz_speed_main / 4
+                }
             }
         }
     }

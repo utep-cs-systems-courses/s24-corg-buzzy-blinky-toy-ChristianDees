@@ -6,10 +6,10 @@
 #include "libTimer.h"
 
 // dtb_btd() vars
-char green_blinkLimit = 5;  // initially keep green dim
-char red_blinkLimit = 1;    // initially keep red bright
-char green_blinkCount = 0;  // total times green blinked
-char red_blinkCount = 0;    // total times red blinked
+char green_blink_limit = 5;  // initially keep green dim
+char red_blink_limit = 1;    // initially keep red bright
+char green_blink_count = 0;  // total times green blinked
+char red_blink_count = 0;    // total times red blinked
 
 // led vars
 int led_seconds = 0;        // counts each interrupt occuring
@@ -36,6 +36,8 @@ char mario_lights[49] = {2,0,2,0,0,2,0,0,1,0,
 char star_wars_lights[26] = {2,2,0,2,2,0,2,2,0,
             1,1,0,2,0,1,1,0,2,2,0,1,0,2,2,2,2};
 
+
+/*
 // initialize leds
 void led_init()
 {
@@ -65,9 +67,10 @@ void lights_on(){
 void lights_off(){
     P1OUT &= ~LEDS;
 }
-
+*/
 // green starts dim, gradually getting brighter
 // red starts bright, gradually getting dimmer
+/*
 void dtb_btd(){
     // begin counter once button released
     if (interrupt_counter)
@@ -78,31 +81,28 @@ void dtb_btd(){
     // move to easter egg state
     // after button held for 3 seconds
     if (led_second_count == 3){
-        update_vars();
         transition(EASTEREGG);
     // if user presses button twice within 70/250 seconds
     // move to second easter egg state
     } else if (interrupt_counter == 2 && interrupt_seconds <= 70){
-        update_vars();
         transition(SECONDEASTEREGG);
     // if user presses button only once
     // move to pregame state
     }else if (interrupt_counter == 1 && interrupt_seconds > 70){
-        update_vars();
         transition(PREGAME);
     }else {
-        green_blinkCount++;
-        if (green_blinkCount >= green_blinkLimit) { // on for 1 interrupt period
-            green_blinkCount = 0;
+        green_blink_count++;
+        if (green_blink_count >= green_blink_limit) { // on for 1 interrupt period
+            green_blink_count = 0;
             P1OUT |= LED_GREEN;   // set green
-        } else if (green_blinkCount < green_blinkLimit)
+        } else if (green_blink_count < green_blink_limit)
             P1OUT &= ~LED_GREEN;  // clear green
-        if (red_blinkCount >= red_blinkLimit){
-            red_blinkCount = 0;
+        if (red_blink_count >= red_blink_limit){
+            red_blink_count = 0;
             P1OUT |=  LED_RED;    // set red
-        } else if (red_blinkCount < red_blinkLimit)
+        } else if (red_blink_count < red_blink_limit)
             P1OUT &= ~LED_RED;    // clear red
-        red_blinkCount++;
+        red_blink_count++;
         led_seconds ++;
         // count total seconds button held down
         if (easter_egg_seconds >= 250){ // once each second
@@ -111,20 +111,20 @@ void dtb_btd(){
         }
         if (led_seconds >= 250) {     // once each second
             led_seconds = 0;
-            red_blinkLimit ++;        // make red blink more (get dimmer)
-            green_blinkLimit --;      // make green blink less (get less dim)
-            if (green_blinkLimit <= 0)
-                green_blinkLimit = 5; // reset green to 5 blinks
-            if (red_blinkLimit > 5)
-                red_blinkLimit = 1;   // reset red to 1 blink
+            red_blink_limit ++;        // make red blink more (get dimmer)
+            green_blink_limit --;      // make green blink less (get less dim)
+            if (green_blink_limit <= 0)
+                green_blink_limit = 5; // reset green to 5 blinks
+            if (red_blink_limit > 5)
+                red_blink_limit = 1;   // reset red to 1 blink
         }
     }
 }
-
+*/
+/*
 // light show to match the mario theme
 void mario_led(){
     if (led_second_count == 49){
-        update_vars();          // update all variables
         transition(WAITING);    // go back to waiting state when done
     } else {
         led_seconds++;
@@ -141,11 +141,11 @@ void mario_led(){
         }
     }
 }
-
+*/
+/*
 // light show to match the star wars theme
 void star_wars_led(){
     if (led_second_count == 26){
-        update_vars();          // update all variables
         transition(WAITING);    // go back to waiting state when done
     } else {
         led_seconds++;
@@ -162,11 +162,11 @@ void star_wars_led(){
         }
     }
 }
-
+*/
 // blink countdown (red, red, red, green)
+/*
 void blink_four_times(){
     if (led_second_count == 8){
-        update_vars();             // update all variables
         transition(DURINGGAME);    // start game
     } else {
         led_seconds ++;
@@ -181,14 +181,14 @@ void blink_four_times(){
         }
     }
 }
-
+*/
 // random led changes
+/*
 void led_game(){
     led_seconds++;
     if (led_seconds >= led_speed) {   // once every led_speed
         if (led_second_count){        // leds have changed once
             if (!button_flag){        // if no user input, end game
-                update_vars();
                 transition(GAMEOVER);
             }
             if (led_changes < 16) // increment only up to 15
@@ -214,19 +214,23 @@ void led_game(){
                     break;
             }
         }
-        if (((led_changes % 3)==0) && led_changes <= 15) // 6 levels, increasingly getting faster
-            led_speed -= .10*led_speed; // leds change faster
+        if (led_changes <= 10) {
+            if ((led_changes & 1) == 0 && led_changes != 0) { // Check if buzz_changes is even (excluding 0)
+                led_speed -= led_speed >> 3;       // Equivalent to buzz_speed_main / 8
+            }
+        }
     }
 }
-
+ */
+/*
 // resets all vars before transitioning to new state
 void update_vars(){
     lights_off();
     
-    green_blinkLimit = 5;
-    red_blinkLimit = 1;
-    green_blinkCount = 0;
-    red_blinkCount = 0;
+    green_blink_limit = 5;
+    red_blink_limit = 1;
+    green_blink_count = 0;
+    red_blink_count = 0;
     
     led_seconds = 0;
     led_second_count = 0;
@@ -248,3 +252,4 @@ void update_vars(){
     interrupt_counter = 0;
     interrupt_seconds = 0;
 }
+*/

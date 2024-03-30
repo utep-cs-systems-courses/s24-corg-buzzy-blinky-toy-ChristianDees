@@ -4,11 +4,11 @@
 // states
 typedef enum {
     WAITING = 0,
-    EASTEREGG,
-    SECONDEASTEREGG,
-    PREGAME,
-    DURINGGAME,
-    GAMEOVER
+    EASTEREGG = 1,
+    SECONDEASTEREGG = 2,
+    PREGAME = 3,
+    DURINGGAME = 4,
+    GAMEOVER = 5
 } State;
 
 // function prototypes

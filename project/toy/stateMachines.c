@@ -42,5 +42,6 @@ void state_gameover(){
 
 // transition to next state
 void transition(State next_state) {
+    update_vars();
     current_state = next_state;
 }

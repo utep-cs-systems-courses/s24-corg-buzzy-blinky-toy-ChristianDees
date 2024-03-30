@@ -62,8 +62,10 @@ switch_interrupt_handler()
         if (!(p1val & SW0))  // if side button is held
             easter_egg = 1;
         // if and only if the side button is pressed
-        else if (!(button1 || button2 || button3 || button4))
+        else if (!(button1 || button2 || button3 || button4)){
+            easter_egg = 0;
             interrupt_counter++;
+        }
     }
     
     // handling for main 4 buttons
@@ -90,7 +92,6 @@ switch_interrupt_handler()
     exit:
         return;
     game_over:
-        update_vars();
         transition(GAMEOVER);
         return;
 }
