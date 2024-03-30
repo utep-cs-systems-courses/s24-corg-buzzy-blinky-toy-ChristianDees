@@ -1,7 +1,7 @@
 #include <msp430.h>
 #include "switches.h"
 #include "led.h"
-#include "stateMachines.h"
+#include "state_machines.h"
 
 
 // return change based on switch interrupt in port 1

@@ -2,7 +2,7 @@
 #include "led.h"
 #include "switches.h"
 #include "buzzer.h"
-#include "randomInt.h"
+#include "random_int.h"
 
 // initializes required components
 void main(void)

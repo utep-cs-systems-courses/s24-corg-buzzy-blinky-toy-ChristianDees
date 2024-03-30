@@ -13,7 +13,7 @@ all: combined.elf
 
 #additional rules for files
 
-combined.elf: ${COMMON_OBJECTS} ledGame.o ledControl.o ledGameOver.o buzzer.o p2_interrupt_handler.o randomInt.o stateMachines.o vector_interrupt_handlers.o p1_interrupt_handler.o led.o switches.o ../lib/libTimer.a
+combined.elf: ${COMMON_OBJECTS} led.o buzzer.o p2_interrupt_handler.o random_int.o state_machines.o vector_interrupt_handlers.o p1_interrupt_handler.o switches.o ../lib/libTimer.a
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^
 
 load: combined.elf
