@@ -1,10 +1,9 @@
 .arch msp430g2553
     .data
     .global buzz_second_count, buzz_changes, buzz_speed_quarter
-    buzz_second_count:         .byte 0
-    buzz_changes:              .byte 0
-    buzz_toggler:              .byte 0
-
+    buzz_second_count:  .byte 0
+    buzz_changes:       .byte 0
+    buzz_toggler:       .byte 0
     .align 2
     .global buzz_seconds, buzz_speed_main
     buzz_seconds:       .word 0
@@ -61,21 +60,19 @@
                         .word 0
     .p2align 1,0
     .text
-    .global buzzer_init
+    .global buzzer_init         ; global functions
     .global buzzer_set_period
     .global mario_buzzer
     .global star_wars_buzzer
     .global buzz_four_times
     .global buzz_once
     .global buzz_game_over
-
-    .extern timerAUpmode
+    .extern timerAUpmode        ; global functions and vars required
     .extern P2SEL2
     .extern P2SEL
     .extern P2DIR
     .extern TA0CCR0
     .extern TA0CCR1
-
     .extern star_wars_lights
 
 buzzer_init:                ; intialize buzzer
@@ -107,7 +104,7 @@ mario_buzzer:                   ; play mario theme
     push #end                   ; goto end once finished
     mov #buzzer_set_period, r0  ; set buzzer period to 0
 
-star_wars_buzzer:
+star_wars_buzzer:               ; plau star wars theme
     inc &buzz_seconds           ; buzz_seconds++
     cmp #60, &buzz_seconds      ; buzz_seconds - 60
     jnc end                     ; if buzz_seconds < 60, goto end

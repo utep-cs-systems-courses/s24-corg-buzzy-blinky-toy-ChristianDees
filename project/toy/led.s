@@ -94,9 +94,9 @@
     led_speed:          .word 500   ; easy level speed
     easter_egg_seconds: .word 0     ; easter egg one counter
     interrupt_seconds:  .word 0     ; easter egg two counter
-    .p2align 1,0                 ; set memory boundary of 2 bytes with padding of zeroes
-    .text                        ; executable code
-    .global led_init             ; global functions
+    .p2align 1,0                    ; set memory boundary of 2 bytes with padding of zeroes
+    .text                           ; executable code
+    .global led_init                ; global functions
     .global green_on
     .global red_on
     .global lights_on
@@ -108,7 +108,7 @@
     .global dtb_btd
     .global led_game_over
     .global led_game
-    .extern P1OUT                 ; global variables and functions required
+    .extern P1OUT                   ; global variables and functions required
     .extern P1DIR
     .extern buzz_seconds
     .extern buzz_second_count
@@ -189,8 +189,8 @@ swl_else:                           ; if led_second_count != 26
     jz lights_one                   ; if star_wars_lights[index] == 1, goto lights_one
     cmp.b #2, r7                    ; star_wars_lights[index] - 2
     jz lights_two                   ; if star_wars_lights[index] == 2, goto lights_two
-    cmp.b #3, r7
-    jz lights_one
+    cmp.b #3, r7                    ; star_wars_lights[index] - 3
+    jz lights_one                   ; if star_wars_lights[index] == 3, goto lights_one
 
 mario_led:                          ; blink leds to match mario theme song
     cmp.b #49, &led_second_count    ; led_second_count - 49
@@ -327,7 +327,7 @@ led_game_over:                      ; blink red twice once game is over
     cmp.b #4, &led_second_count     ; led_second_count - 4
     jnz continue_game               ; if led_second_count != 4, goto continue_game
     jmp reset_state                 ; jump to reset state, ending the game
-continue_game:
+continue_game:                      ; if led_second_count != 4
     inc &led_seconds                ; led_seconds++
     cmp #90, &led_seconds           ; led_seconds - 90
     jl end                          ; if led_seconds < 90, goto end
@@ -403,5 +403,5 @@ speed_change:                       ; check if ready to increase speed
     sub r6, &led_speed              ; led_speed -= (led_speed / 8)
     jmp end                         ; goto end once finished
         
-end:                                ; go here once done
-    ret                             ; do nothing, return
+end:
+    ret
