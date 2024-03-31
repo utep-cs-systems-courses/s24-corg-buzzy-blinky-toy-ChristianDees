@@ -177,8 +177,3 @@ restore_stack_sih:
 
 end:
     ret
-
-
-
-
-
