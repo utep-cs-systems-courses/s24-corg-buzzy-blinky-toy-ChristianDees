@@ -10,7 +10,8 @@
 #define SWITCHES (SW1|SW2|SW3|SW4)  // all of port 2 switches
 
 // prototype functions
-void switch_update_interrupt_sense();
+char switch_update_interrupt_sense_1();
+char switch_update_interrupt_sense_2();
 void switch_init();
 void switch_interrupt_handler();
 
