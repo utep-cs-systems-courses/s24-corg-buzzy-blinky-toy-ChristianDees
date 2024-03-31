@@ -15,6 +15,6 @@ extern int buzz_seconds;
 extern char buzz_second_count;
 extern char buzz_changes;
 extern int buzz_speed_main;
-extern char buzz_speed_quarter;
+extern int buzz_speed_quarter;
 
 #endif

@@ -9,7 +9,7 @@
     .global random_led, button_flag
     random_led:         .byte 0 ; random led 1-4
     button_flag:        .byte 0 ; button pressed flag
-    .global easter_egg, interrupt_counter
+    .global easter_egg, interrupt_counter, star_wars_lights
     easter_egg:         .byte 0 ; easter egg flag
     interrupt_counter:  .byte 0 ; side button timer
     mario_lights:               ; mario theme lights
@@ -62,33 +62,33 @@
                         .byte 1 ; green
                         .byte 0 ; off
                         .byte 0 ; off
-    star_wars_lights:           ; starwars theme lights
-                        .byte 2 ; red
-                        .byte 2 ; red
-                        .byte 0 ; off
-                        .byte 2 ; red
-                        .byte 2 ; red
-                        .byte 0 ; off
-                        .byte 2 ; red
-                        .byte 2 ; red
-                        .byte 0 ; off
-                        .byte 1 ; green
-                        .byte 1 ; green
-                        .byte 0 ; off
-                        .byte 2 ; red
-                        .byte 0 ; off
-                        .byte 1 ; green
-                        .byte 1 ; green
-                        .byte 0 ; off
-                        .byte 2 ; red
-                        .byte 2 ; red
-                        .byte 0 ; off
-                        .byte 1 ; green
-                        .byte 0 ; off
-                        .byte 2 ; red
-                        .byte 2 ; red
-                        .byte 2 ; red
-                        .byte 2 ; red
+    star_wars_lights:
+                        .byte 2
+                        .byte 2
+                        .byte 0
+                        .byte 2
+                        .byte 2
+                        .byte 0
+                        .byte 2
+                        .byte 2
+                        .byte 0
+                        .byte 3
+                        .byte 3
+                        .byte 0
+                        .byte 1
+                        .byte 0
+                        .byte 2
+                        .byte 2
+                        .byte 0
+                        .byte 3
+                        .byte 3
+                        .byte 0
+                        .byte 1
+                        .byte 0
+                        .byte 2
+                        .byte 2
+                        .byte 2
+                        .byte 2
     .align 2
     led_seconds:        .word 0     ; counts each interrupt occuring
     led_speed:          .word 500   ; easy level speed
@@ -118,6 +118,7 @@
     .extern buzzer_set_period
     .extern random_int_generator
     .extern transition
+    
 
 led_init:                   ; initailize leds
     bis #65, &P1DIR         ; P1DIR |= LEDS
@@ -188,6 +189,8 @@ swl_else:                           ; if led_second_count != 26
     jz lights_one                   ; if star_wars_lights[index] == 1, goto lights_one
     cmp.b #2, r7                    ; star_wars_lights[index] - 2
     jz lights_two                   ; if star_wars_lights[index] == 2, goto lights_two
+    cmp.b #3, r7
+    jz lights_one
 
 mario_led:                          ; blink leds to match mario theme song
     cmp.b #49, &led_second_count    ; led_second_count - 49
