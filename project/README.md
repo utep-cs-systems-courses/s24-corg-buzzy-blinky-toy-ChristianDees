@@ -1,9 +1,11 @@
+# Blink 'n' Press
+
 ## Description
-This directory contains a toy program for the MSP430 that demonstrates basic I/O using a timer, interrupts, and incorporates a buzzer and LEDs as outputs, along with one side button and four main buttons for input switches. This program also contains one file controlling the LED output and state transition for once the game is over, in assembly. 
+Blink 'n' Press is a program for the MSP430 that transforms the microcontroller into an engaging and interactive game designed to test the user's reaction speed.
 
 ## How to Play
+To begin, press the side button. A countdown will follow with the red LED flashing three times and the green LED flashing once, signaling the start of the game. The LEDs will randomly turn on/off, and players must press the corresponding button. Difficulty increases gradually until the final challenging level. Incorrect answers trigger a flash of the red LED and return to the waiting state ready to be played agin.
 
-The toy program is a game intended to entertain the player by testing their reaction speed. The game begins in a waiting state, during which there is a light show of the green LED starting dim and becoming brighter, while the red LED starts bright and gradually gets dimmer. To play the game, press the side button (P1.3). The game will then have a countdown, with the red LED flashing red along with synchronized buzzing until it plays a higher-pitched tone along with the green LED, indicating the game has begun. Once the game has started, randomly, the LEDs will either only be green, only be red, have both LEDs on, or have both LEDs off. As the LEDs change, a buzzer sound will occur, indicating the change in LEDs. The LEDs will progressively get faster, with six total levels, every three LED changes, to test the player's limit. The player must press the respective button to indicate which LEDs are on. If the player enters an incorrect answer or doesn't press any button, for example, pressing button 4 when only green is on, then the red LED will flash twice along with a buzzer sound, indicating the game is over, and it will return to the waiting state, ready to be played again.
 Button  | Answer
 ------- | -----------
 1       | Only green LED is on
@@ -13,6 +15,20 @@ Button  | Answer
 
 
 ## Compilation Instructions
+The Makefile in the project directory builds the toy program and timer library using **make all**. To load the program onto the MSP430, use **make load** in the toy directory. Clean both directories with **make clean** in the project directory.
 
-The Makefile in this direcory (the project directory) contains rules to run the Makefile in within the toy directory. Use **make all** in this directory to build the toy program and the timer library. Once the program is built, you can load the program onto the MSP430 by changing into the toy directory and using **make load**.
+```bash
+make all
+cd toy/
+make load
+cd ..
+make clean
+```
 
+## Easter Eggs
+There are two easter eggs:
+1. Double press the side button
+2. Hold the side button for three seconds
+
+## Compatibility
+This program is built to be compatible with the MSP430Gxxx series chips, partnered with the Educational BoosterPack found [here](https://www.tindie.com/products/robg/educational-boosterpack-service/). As most of the program is written in assembly, board-specific features are required for this game to work.
