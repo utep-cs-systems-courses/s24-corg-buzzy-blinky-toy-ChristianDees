@@ -1,29 +1,34 @@
-# Lab 2: Blinky-Buzzy Toy
+# Blink 'n' Press
 
-For your second project, your task is to use the MSP430
-Microcontroller and your creativity to design a toy. Each MSP430 board
-is equipped with buttons, LED's, a speaker, and 4 button switches
-Utilizing these features and your knowledge of I/O, develop a
-program to turn the board into a toy.
+## Description
+Blink 'n' Press is a program for the MSP430 that transforms the microcontroller into an engaging and interactive game designed to test the user's reaction speed.
 
-This toy should at minimum:
+## How to Play
+To begin, press the side button. A countdown will follow with the red LED flashing three times and the green LED flashing once, signaling the start of the game. The LEDs will randomly turn on/off, and players must press the corresponding button. Difficulty increases gradually until the final challenging level. Incorrect answers trigger a flash of the red LED and return to the waiting state ready to be played agin.
 
-* generate sounds,
-* dynamically change the LEDs that are illuminated, both brighly and dimmly,
-* implement a state machine to maintain the state of the toy,
-* and use the four buttons on the expansion board (P2.0-3) to transition the state machine.
+Button  | Answer
+------- | -----------
+1       | Only green LED is on
+2       | Only red LED is on
+3       | Both LEDs are on
+4       | Both LEDs are off
 
-**Furthermore, at least one of the functions to transition the state machine must be written by you in assembly language.**
 
-## Getting Started 
+## Compilation Instructions
+The Makefile in the project directory builds the toy program and timer library using **make all**. To load the program onto the MSP430, use **make load** in the toy directory. Clean both directories with **make clean** in the project directory.
 
-Inside this repository you will find two directories:
-1. The 'demos' directory contains sample programs for you to review and learn from. These example programs are a great starting point in understanding how to program the MSP430 microcontroller. See the readme in the demo directory on how to compile and run the demo programs.
-2. The 'project' directory should contain the source code for your toy.
+```bash
+make all
+cd toy/
+make load
+cd ..
+make clean
+```
 
-## What Should Be In Your Repo
+## Easter Eggs
+There are two easter eggs:
+1. Double press the side button
+2. Hold the side button for three seconds
 
-Your project will be graded on the following items:
-* Source code for your toy (only .c, .s and .h files).
-* A README containing a description of your toy, how to compile it, how to run it, and how to use it.
-* A Makefile with appropriate rules to build and clean your toy.
+## Compatibility
+This program is built to be compatible with the MSP430Gxxx series chips, partnered with the Educational BoosterPack found [here](https://www.tindie.com/products/robg/educational-boosterpack-service/). As most of the program is written in assembly, board-specific features are required for this game to work.
