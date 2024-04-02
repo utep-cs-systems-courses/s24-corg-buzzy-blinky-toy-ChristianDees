@@ -4,7 +4,7 @@
 Blink 'n' Press is a program for the MSP430 that transforms the microcontroller into an engaging and interactive game designed to test the user's reaction speed.
 
 ## How to Play
-To begin, press the side button. A countdown will follow with the red LED flashing three times and the green LED flashing once, signaling the start of the game. The LEDs will randomly turn on/off, and players must press the corresponding button. Difficulty increases gradually until the final challenging level. Incorrect answers trigger a flash of the red LED and return to the waiting state ready to be played agin.
+To begin, press the side button. The red LED flashes three times and the green LED once, signaling the game's start. LEDs randomly toggle with a buzzer sound, gradually increasing in tempo. Players must react swiftly, pressing the corresponding button. An incorrect answer prompts a red LED flash, resetting the game for another attempt.
 
 Button  | Answer
 ------- | -----------
